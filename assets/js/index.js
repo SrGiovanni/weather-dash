@@ -1,5 +1,6 @@
 const apikey = '33981d26ad23ea768486e597389db299';
 // Storage for past searches, would be saved as "pastSearches" in local storage
+// Contains objects with fields: lat, long, name;
 let pastSearches = [];
 
 // format current weather
@@ -37,6 +38,9 @@ $('#search-form').on('submit', function(event) {
   getGeolocation(location);
 } );
 
+// past search button handler
+
+
 /**
  * Calls Open weather API with name of city to get the {lat, long}  
  * API params q:city name, APIKey: personal API key, limit: limit number of responses
@@ -47,9 +51,9 @@ let getGeolocation = (locationString) => {
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&limit=1&appid=${apikey}`)
     .then(response => {
       console.log(response);
-        return response.json()
+      return response.json()
     }).then(data => {
-        // is this working?
+        // is this working? y
         console.log(data)
         return {lat, lon, name} = data[0];
     }).then(locationObj => {
@@ -71,6 +75,7 @@ let getWeatherData = (location) => {
   }).then((data) => {
     // what did I get back?
     console.log(data)
+    pastSearches.push(location);
     displayWeather(data, location.name);
   }).catch((err) => {
     console.log(err);
@@ -84,6 +89,9 @@ let getWeatherData = (location) => {
  */
 let displayWeather = (weatherData, locationName) => {
   $('#target-current-weather').html( currentWeatherBox(weatherData.current, locationName) );
+
+  // display formatted forecast for weatherData.daily.subarray(1,6)
+  $('#forecast-area').html( weatherData.daily.slice( 1, 6 ).map( forecastBox ).join('') );
 };
 
 /**
