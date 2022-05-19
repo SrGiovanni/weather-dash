@@ -16,8 +16,12 @@
     background-color: #EA841F;
 }
 
-.isUVhigh {
+.is-UVhigh {
     background-color: red;
+}
+
+#forecast-area article{
+    min-width: 200px;
 }
 
 /* html, body {
@@ -56,13 +60,6 @@ main {
     display: flex;
 }
 
-#forecast-area article{
-    border-style: solid;
-    border-width: 3px;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 5px;
-}
 
 footer {
     border-top: 2px solid #0000FF;

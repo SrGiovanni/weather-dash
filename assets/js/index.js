@@ -3,15 +3,13 @@ const apikey = '33981d26ad23ea768486e597389db299';
 // Contains objects with fields: lat, long, name;
 let pastSearches = {};
 let pastPlaceNames = [];
-let lastSearch = {};
-//{chicago: {lat: 22, lon: 55}}
 
 // Formatting helper functions 
 // format current weather
 let formatCurrentWeatherBox = (currentData, locationName) => {
   console.log(currentData);
   let dt = new Date(currentData.dt*1000);
-  let uvIndexClass = currentData.uvi<3 ? 'is-UVgood': currentData.uvi< 7? 'is-UVmoderate': 'is-UVhigh';
+  let uvIndexClass = currentData.uvi<3 ? 'is-UVgood': currentData.uvi< 7 ? 'is-UVmoderate': 'is-UVhigh';
   let weather = currentData.weather[0];
   
   return `<h3 class="title is-3">${locationName +' '+ dt.toDateString() +' ' }</h3>
@@ -43,7 +41,6 @@ let formatForecastBox = (dailyData) => {
 // format buttons to get previous searches
 let formatPastButtons = (pastSearchesLocation) => {
   let pastButtonData = pastSearches[pastSearchesLocation];
-  console.log( JSON.stringify(pastButtonData) )
   return `<li><button class="button is-rounded is-info block" 
   data-location=${JSON.stringify(pastButtonData.name)}>
   ${pastButtonData.name}</button></li>`
@@ -62,13 +59,11 @@ $('#search-form').on('submit', function(event) {
  * takes the data from the button, and calls getWeatherData() for that location.
  * getWeatherData will call the rendering function
  * // can move the button element to the end with { array.push(array.splice(array.indexOf(element), 1)[0]); }
- * @param {*} locationString 
  */
 $("#previous-searches").on('click', function(event) {
   event.preventDefault();
 
   let locationRevisit = event.target.dataset.location
-  console.log(locationRevisit);
   pastPlaceNames.unshift(pastPlaceNames.splice(pastPlaceNames.indexOf(locationRevisit), 1)[0]);
   getWeatherData(pastSearches[locationRevisit]);
 })
@@ -83,11 +78,8 @@ $("#previous-searches").on('click', function(event) {
 let getGeolocation = (locationString) => {
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&limit=1&appid=${apikey}`)
     .then(response => {
-      console.log(response);
       return response.json()
     }).then(data => {
-        // is this working? y
-        console.log(data)
         return data[0] ;
     }).then(({ lat, lon, name }) => { 
       //pastSearches.push({ lat, lon, name });
@@ -109,11 +101,6 @@ let getWeatherData = (locationObj) => {
   .then(response => {
       return response.json();
   }).then((data) => {
-    // what did I get back?
-    console.log(data)
-    // @TODO remove test data form final deployment
-    localStorage.setItem('weatherData', JSON.stringify( data ) );
-    localStorage.setItem('lastLocation', JSON.stringify( locationObj ) );
     displayWeather(data, locationObj.name);
   }).catch((err) => {
     console.log(err);
@@ -150,19 +137,16 @@ let saveSearches = () => {
 let onLoad = () =>{
     let tempPast = JSON.parse(localStorage.getItem('pastSearches') );
     let tempNames = JSON.parse( localStorage.getItem('pastPlaceNames') )
-    let lastSearch = JSON.parse(localStorage.getItem('weatherData'));
-    let lastLocation = JSON.parse(localStorage.getItem('lastLocation'))
+    
     if(tempPast){
-        pastSearches = tempPast;
+      pastSearches = tempPast;
     };
     if(tempNames){
       pastPlaceNames = tempNames;
     };
-
-    // @TODO: delete before testing and search for fresh data on load from the last element of the pastSearches array
-    if ( lastSearch && lastLocation) {
-      displayWeather(lastSearch, lastLocation.name);
-    }
+    if(tempPast && tempNames) {
+      getWeatherData(pastSearches[pastPlaceNames[0] ] );
+    };
 };
 // On load functions
 onLoad();
