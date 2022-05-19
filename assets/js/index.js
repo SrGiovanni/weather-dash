@@ -1,15 +1,17 @@
 const apikey = '33981d26ad23ea768486e597389db299';
 // Storage for past searches, would be saved as "pastSearches" in local storage
 // Contains objects with fields: lat, long, name;
-let pastSearches = [];
+let pastSearches = {};
+let pastPlaceNames = [];
 let lastSearch = {};
+//{chicago: {lat: 22, lon: 55}}
 
 // Formatting helper functions 
 // format current weather
 let formatCurrentWeatherBox = (currentData, locationName) => {
   console.log(currentData);
   let dt = new Date(currentData.dt*1000);
-  let uvIndexClass = currentData.uvi<3? 'uv-favorable': currentData.uvi< 7? 'uv-moderate': 'uv-high';
+  let uvIndexClass = currentData.uvi<3 ? 'is-UVgood': currentData.uvi< 7? 'is-UVmoderate': 'is-UVhigh';
   let weather = currentData.weather[0];
   
   return `<h3>${locationName +' '+ dt.toDateString() +' ' }</h3>
@@ -23,12 +25,17 @@ let formatCurrentWeatherBox = (currentData, locationName) => {
 // format a forecast article box from 
 let formatForecastBox = (dailyData) => {
   let dt = new Date(dailyData.dt*1000);
+  let weather = dailyData.weather[0];
 
-  return `<article>
-  <h3>${dt.toDateString()}</h3>
-  <p>Temp: ${dailyData.temp.day} F</p>
-  <p>Wind: ${dailyData.wind_speed} MPH</p>
-  <p>Humidity: ${dailyData.humidity} %</p>
+  return `
+  <article class="column card block  ">
+  <h3 class="card-header">${dt.toDateString()}</h3>
+  <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
+  <div class="card-content">
+    <p>Temp: ${dailyData.temp.day}&#176 F</p>
+    <p>Wind: ${dailyData.wind_speed} MPH</p>
+    <p>Humidity: ${dailyData.humidity} %</p>
+  </div>
 </article>`;
   
 }
@@ -36,7 +43,7 @@ let formatForecastBox = (dailyData) => {
 // format buttons to get previous searches
 let formatPastButtons = (pastButtonData) => {
   console.log( JSON.stringify(pastButtonData) )
-  return `<li><button data-locationObj="${ JSON.stringify(pastButtonData) }">${pastButtonData.name}</button></li>`
+  return `<li><button class="button is-rounded is-info block" data-locationStr=${pastButtonData.name}>${pastButtonData.name}</button></li>`
 }
 
 // Event Handlers
@@ -57,8 +64,10 @@ $('#search-form').on('submit', function(event) {
 $("#previous-searches").on('click', function(event) {
   event.preventDefault();
 
-  console.log(event.target)
-  console.log(event.target.dataset)
+  console.log(event.target.dataset.locationString)
+  let locationRevisit = event.target.dataset.locationString
+  pastPlaceNames.push(array.splice(pastPlaceNames.indexOf(locationRevisit), 1)[0]);
+  // getWeatherData(pastSearches[locationRevisit]);
 })
 
 /**
@@ -78,7 +87,9 @@ let getGeolocation = (locationString) => {
         console.log(data)
         return data[0] ;
     }).then(({ lat, lon, name }) => { 
-      pastSearches.push({ lat, lon, name });
+      //pastSearches.push({ lat, lon, name });
+      pastSearches[name] = { lat, lon, name };
+      pastPlaceNames.push(name);
       getWeatherData({ lat, lon, name });
     }).catch( (err) => {
       console.log(err);
@@ -128,16 +139,21 @@ let displayWeather = (weatherData, locationName) => {
  */
 let saveSearches = () => {
   localStorage.setItem("pastSearches", JSON.stringify(pastSearches) );
+  localStorage.setItem("pastPlaceNames", JSON.stringify(pastPlaceNames) );
 }
 /**
  * onLoad: get local data for past searches, the populate the button list
  */
 let onLoad = () =>{
     let tempPast = JSON.parse(localStorage.getItem('pastSearches') );
+    let tempNames = JSON.parse( localStorage.getItem('pastPlaceNames') )
     let lastSearch = JSON.parse(localStorage.getItem('weatherData'));
     let lastLocation = JSON.parse(localStorage.getItem('lastLocation'))
     if(tempPast){
         pastSearches = tempPast;
+    };
+    if(tempNames){
+      pastPlaceNames = tempNames;
     };
 
     // @TODO: delete before testing and search for fresh data on load from the last element of the pastSearches array

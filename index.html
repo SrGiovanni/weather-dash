@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
+    
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -17,38 +14,49 @@
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
-    /> -->
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Dash</title>
 </head>
 <body>
-    <header>
-        <h1>Weather Dashboard</h1>
+    <header class="hero block is-info is-medium">
+        <h1 class="title is-centered">Your Weather Dashboard</h1>
     </header>
-    <main>
-        <section class="nav-pannel">
+    <main class="columns">
+        <section class="nav-panel box block comun is-one-fifth ">
             <div id="search-form">
                 <form action="">
-                    <label for="search-box">Enter location:</label>
-                    <input id="search-box" type="text">
-                    <button type="submit">Search</button>
+                    <label class="label" for="search-box">Enter location:</label>
+                    <div class="field has-addons">
+                        <input class="input" id="search-box" type="text">
+                        <button class="button is-info" type="submit">Search</button>
+                    </div>
                 </form>
             </div>
-            <ul id="previous-searches">
-
-            </ul>
+            <div class="card block">
+                <div class="card-header">
+                    <h4 class="title is-4">Previous Searches</h4>
+                </div>
+                <ul id="previous-searches">
+                </ul>
+            </div>
         </section>
-        <section>
-            <article id="target-current-weather">
+        <section class="colmn block">
+            <article id="target-current-weather" class="box block">
 
             </article>
-            <section>
-                <h3>5-Day Forecast</h3>
-                <div id="forecast-area">
+            <section class="block">
+                <h3 class="block">5-Day Forecast</h3>
+                <div id="forecast-area" class="columns is-multiline">
                     
                 </div>
             </section>
         </section>
     </main>
+    <footer class="footer">
+        <p>Made by: John &copy; 2022;</p>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

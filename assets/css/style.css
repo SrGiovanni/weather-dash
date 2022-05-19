@@ -1,0 +1,69 @@
+:root{
+    --primary: 
+    --secondary: #0000FF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+.is-UVgood {
+    background-color: #3FBF3F;
+}
+
+.is-UVmoderate {
+    background-color: #EA841F;
+}
+
+.isUVhigh {
+    background-color: red;
+}
+
+/* html, body {
+    min-height: 100%;
+    background-color: cornsilk;
+}
+
+header {
+    background-color: #0000FF;
+    height: 100%;
+    width: 100%;
+    padding: 30px;
+}
+
+header h1 {
+    color: white;
+    text-align: center;
+}
+
+main {
+    display: flex;
+}
+
+.nav-panel {
+    padding: 5px;
+}
+
+#target-current-weather{
+    border-color: black;
+    margin: 5px;
+    border-top: 10px;
+    border-width: 2px;
+}
+
+#forecast-area{
+    display: flex;
+}
+
+#forecast-area article{
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+footer {
+    border-top: 2px solid #0000FF;
+} */
