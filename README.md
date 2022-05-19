@@ -1,21 +1,39 @@
 # weather-dash
 
-## requirements
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-```
-GIVEN a weather dashboard with form inputs
-WHEN I search for a city
-THEN I am presented with current and future conditions for that city and that city is added to the search history
-WHEN I view current weather conditions for that city
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-WHEN I view the UV index
-THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-WHEN I click on a city in the search history
-THEN I am again presented with current and future conditions for that city
-```
+## Description
 
-## Live Site link
+Find the weather near you, or wherever you want to find it.
 
-https://srgiovanni.github.io/weather-dash/
+## Table of Contents
+
+- [Usage](#usage)
+- [Screenshots](#screenshots)
+- [License](#license)
+- [Contributing](#contributing)
+- [Questions](#questions)
+
+## Usage
+
+Open the webpage at the following link: [Weather dash](srgiovanni.github.io/weather-dash/)
+
+### Screenshots
+
+   <img src="assets/images/screenshoot-1.PNG" alt="Demo of the live site" style="max-width: 500px;">
+
+## License
+
+Copyright (c) 2022.  
+Licensed under the [MIT](https://mit-license.org/) license.
+
+---
+
+## Contributing
+
+You can submit pull requests for expanded functionality, bug fixes, optimization, and correcting typographical errors. Please be respectful to eachother when you meet, and strive to leave the community and code in a better state than you found it.
+
+## Questions
+
+If you have any questions, my <a href="https://github.com/SrGiovanni">GitHub profile</a> is linked,
+or you can email me at <a href = "mailto: example@farsight.c">example@farsight.c</a>.
