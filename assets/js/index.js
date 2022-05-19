@@ -14,7 +14,7 @@ let formatCurrentWeatherBox = (currentData, locationName) => {
   let uvIndexClass = currentData.uvi<3 ? 'is-UVgood': currentData.uvi< 7? 'is-UVmoderate': 'is-UVhigh';
   let weather = currentData.weather[0];
   
-  return `<h3>${locationName +' '+ dt.toDateString() +' ' }</h3>
+  return `<h3 class="title is-3">${locationName +' '+ dt.toDateString() +' ' }</h3>
    <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
   <p>Temp: ${currentData.temp}&#176 F</p>
   <p>Wind: ${currentData.wind_speed}</p>
@@ -41,9 +41,12 @@ let formatForecastBox = (dailyData) => {
 }
 
 // format buttons to get previous searches
-let formatPastButtons = (pastButtonData) => {
+let formatPastButtons = (pastSearchesLocation) => {
+  let pastButtonData = pastSearches[pastSearchesLocation];
   console.log( JSON.stringify(pastButtonData) )
-  return `<li><button class="button is-rounded is-info block" data-locationStr=${pastButtonData.name}>${pastButtonData.name}</button></li>`
+  return `<li><button class="button is-rounded is-info block" 
+  data-location=${JSON.stringify(pastButtonData.name)}>
+  ${pastButtonData.name}</button></li>`
 }
 
 // Event Handlers
@@ -64,10 +67,10 @@ $('#search-form').on('submit', function(event) {
 $("#previous-searches").on('click', function(event) {
   event.preventDefault();
 
-  console.log(event.target.dataset.locationString)
-  let locationRevisit = event.target.dataset.locationString
-  pastPlaceNames.push(array.splice(pastPlaceNames.indexOf(locationRevisit), 1)[0]);
-  // getWeatherData(pastSearches[locationRevisit]);
+  let locationRevisit = event.target.dataset.location
+  console.log(locationRevisit);
+  pastPlaceNames.unshift(pastPlaceNames.splice(pastPlaceNames.indexOf(locationRevisit), 1)[0]);
+  getWeatherData(pastSearches[locationRevisit]);
 })
 
 /**
@@ -128,7 +131,7 @@ let displayWeather = (weatherData, locationName) => {
   // display formatted forecast for weatherData.daily.subarray(1,6)
   $('#forecast-area').html( weatherData.daily.slice( 1, 6 ).map( formatForecastBox ).join('') );
 
-  $('#previous-searches').html( pastSearches.map(formatPastButtons).join('') );
+  $('#previous-searches').html( pastPlaceNames.map(formatPastButtons).join('') );
   saveSearches();
 };
 
