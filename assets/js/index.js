@@ -13,7 +13,7 @@ let formatCurrentWeatherBox = (currentData, locationName) => {
   let weather = currentData.weather[0];
   
   return `<h3 class="title is-3">${locationName +' '+ dt.toDateString() +' ' }</h3>
-   <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
+   <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
   <p>Temp: ${currentData.temp}&#176 F</p>
   <p>Wind: ${currentData.wind_speed}</p>
   <p>Humidity: ${currentData.humidity}%</p>
@@ -28,7 +28,7 @@ let formatForecastBox = (dailyData) => {
   return `
   <article class="column card block  ">
   <h3 class="card-header">${dt.toDateString()}</h3>
-  <img src="http://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
+  <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
   <div class="card-content">
     <p>Temp: ${dailyData.temp.day}&#176 F</p>
     <p>Wind: ${dailyData.wind_speed} MPH</p>
