@@ -76,7 +76,7 @@ $("#previous-searches").on('click', function(event) {
  * @param location 
  */
 let getGeolocation = (locationString) => {
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&limit=1&appid=${apikey}`)
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${locationString}&limit=1&appid=${apikey}`)
     .then(response => {
       return response.json()
     }).then(data => {
